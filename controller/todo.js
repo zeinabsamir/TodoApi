@@ -15,12 +15,23 @@ router.get('/', function(req, res, next) {
          
 });
 
+router.get('/:id', function(req, res, next) {
+    Todo.find({_id: req.params.id },(error,result)=>{
+        
+        res.send(result);
+     });
+         
+});
+
 router.post('/add', function(req, res, next) {
 
         const newTodo = new Todo(req.body);
         newTodo.save(err => {
             if (err) return res.status(500).send(err);
-            return res.status(200).send(newTodo);
+            Todo.find({},(error,result)=>{
+        
+                return res.status(200).send(result);
+             }); 
         });
         
 });
@@ -43,11 +54,10 @@ router.get('/delete/:id', function(req, res, next) {
     Todo.findByIdAndRemove(req.params.id, (err, todo) => {
         
         if (err) return res.status(500).send(err);
-        const response = {
-            message: "Todo successfully deleted",
-            id: todo._id
-        };
-        return res.status(200).send(response);
+        Todo.find({},(error,result)=>{
+        
+            return res.status(200).send(result);
+         }); 
     });
         
       
