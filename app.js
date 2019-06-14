@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.send('Hello World!'));
-// app.use('/todos', todo);
+app.use('/todos', todo);
 
 
 app.listen(app.get('port'), () => console.log(`App listening on port ${app.get('port')}`));
